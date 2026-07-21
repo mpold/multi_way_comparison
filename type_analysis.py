@@ -886,6 +886,16 @@ input[type=search]:focus{outline:2px solid var(--accent);outline-offset:1px;}
   background:var(--accent);border-color:var(--accent);color:var(--net-bg);
   letter-spacing:.02em;}
 .resetbtn:hover{background:var(--accent);filter:brightness(1.08);}
+/* 'Significant only' borrows the filled look of Default settings so it reads as a
+   primary action, in green to stay clear of the accent-blue toggles around it. The
+   ID + attribute selectors below out-specify the generic button[aria-pressed=true]
+   rule, so its pressed state keeps the green fill instead of flipping to accent. */
+#sigbtn{width:100%;margin-top:0;font-size:12.5px;font-weight:700;letter-spacing:.02em;
+  background:#42993f;border-color:#42993f;color:var(--net-bg);}
+#sigbtn:hover{background:#42993f;filter:brightness(1.08);}
+#sigbtn[aria-pressed=true]{background:#42993f;border-color:#42993f;color:var(--net-bg);
+  filter:brightness(0.88);}
+#sigbtn[aria-pressed=true]:hover{filter:brightness(0.96);}
 .sect{font-size:11px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
   color:var(--text-muted);margin:0 0 9px;}
 /* Collapsed legends keep a colour preview in the summary, so the encoding is
@@ -1083,43 +1093,6 @@ div.vis-tooltip mark{background:var(--tip-mark);color:#1a1a1a;border-radius:2px;
         </div>
       </div>
     </div>
-   </div>
-  </aside>
-  <div class="canvas">
-    <div id="net"></div>
-    <div class="tblwrap" id="tblwrap">
-      <div class="tnote" id="tblnote"></div>
-      <table id="tbl" class="sortable"></table>
-    </div>
-    <div class="sumwrap" id="sumwrap"><div class="doc" id="sum"></div></div>
-    <div class="docwrap" id="docwrap"><div class="doc" id="doc"></div></div>
-  </div>
-  <aside class="side">
-   <div class="railtop">
-    <div>
-      <div class="sliders" style="margin-top:0">
-        <div class="srow">
-          <label class="slab" for="conf">Min score</label>
-          <input id="conf" type="range" min="0" max="__MAXSTEP__" step="1" value="__DEFSTEP__"
-                 aria-label="Minimum relationship score">
-          <span class="sval" id="confval">__DEFCONF__</span>
-        </div>
-        <p class="hint" id="confhint" hidden></p>
-        <div class="srow">
-          <label class="slab" for="mincluster">Min cluster</label>
-          <input id="mincluster" type="range" min="2" max="12" step="1" value="__DEFCLUSTER__"
-                 aria-label="Minimum connected cluster size">
-          <span class="sval" id="mcval">__DEFCLUSTER__</span>
-        </div>
-        <p class="hint" id="mchint" hidden></p>
-        <div class="panelbox" style="margin-top:10px">
-          <button class="resetbtn" id="rbtn" style="margin-top:0"
-                  title="Score ≥ __DEFCONF__, min cluster __DEFCLUSTER__, T __DEFTMIN__–__DEFTMAX__, max q __DEFFDRV__, publications __DEFPUB__, all types and years, no gene focus or text search">Default settings</button>
-          <p class="boxcap" style="margin:7px 0 0">Controls become stricter as you move right. Scroll down for all control options. Some settings can slow graph rendering.</p>
-        </div>
-      </div>
-      <p class="count" id="count"></p>
-    </div>
     <details class="leg" id="legpub" open>
       <summary><span class="sect">Min publications</span>
         <span class="mnums" id="pubsum"></span>
@@ -1159,6 +1132,43 @@ __PUBROWS__
         the whole corpus, not the slice on screen.</p>
       </div>
     </details>
+   </div>
+  </aside>
+  <div class="canvas">
+    <div id="net"></div>
+    <div class="tblwrap" id="tblwrap">
+      <div class="tnote" id="tblnote"></div>
+      <table id="tbl" class="sortable"></table>
+    </div>
+    <div class="sumwrap" id="sumwrap"><div class="doc" id="sum"></div></div>
+    <div class="docwrap" id="docwrap"><div class="doc" id="doc"></div></div>
+  </div>
+  <aside class="side">
+   <div class="railtop">
+    <div>
+      <div class="sliders" style="margin-top:0">
+        <div class="srow">
+          <label class="slab" for="conf">Min score</label>
+          <input id="conf" type="range" min="0" max="__MAXSTEP__" step="1" value="__DEFSTEP__"
+                 aria-label="Minimum relationship score">
+          <span class="sval" id="confval">__DEFCONF__</span>
+        </div>
+        <p class="hint" id="confhint" hidden></p>
+        <div class="srow">
+          <label class="slab" for="mincluster">Min cluster</label>
+          <input id="mincluster" type="range" min="2" max="12" step="1" value="__DEFCLUSTER__"
+                 aria-label="Minimum connected cluster size">
+          <span class="sval" id="mcval">__DEFCLUSTER__</span>
+        </div>
+        <p class="hint" id="mchint" hidden></p>
+        <div class="panelbox" style="margin-top:10px">
+          <button class="resetbtn" id="rbtn" style="margin-top:0"
+                  title="Score ≥ __DEFCONF__, min cluster __DEFCLUSTER__, T __DEFTMIN__–__DEFTMAX__, max q __DEFFDRV__, publications __DEFPUB__, all types and years, no gene focus or text search">Default settings</button>
+          <p class="boxcap" style="margin:7px 0 0">Controls become stricter as you move right. Scroll down for all control options. Some settings can slow graph rendering.</p>
+        </div>
+      </div>
+      <p class="count" id="count"></p>
+    </div>
     <details class="leg" id="legspec" open>
       <summary><span class="sect">Gene specificity</span>
         <span class="mdots" role="img" aria-label="one colour per type">__MDOTS__</span>
@@ -1196,7 +1206,7 @@ __ARMS__
         <p class="hint" id="fdrhint">T is the effect size; q is whether it is more than corpus size talking.</p>
         <div class="controls" style="margin-top:9px">
           <button id="sigbtn" aria-pressed="false">Significant only</button>
-          <button id="spreadbtn" aria-pressed="false" hidden>Spread out</button>
+          <button id="spreadbtn" class="tool" aria-pressed="false" hidden>Spread out</button>
         </div>
         <p class="hint" id="sighint">Off — genes above the ceiling are drawn as context.</p>
         <p class="note">Untick a type to hide the genes it dominates. Share of each
