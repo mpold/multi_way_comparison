@@ -63,9 +63,7 @@ The input graphs are produced the pipeline provided in https://github.com/mpold/
 
 Builds a single interactive knowledge graph over **two or more** source graphs.
 Node **hue** is the type a gene belongs to most; node **saturation** is how
-exclusively it belongs there. It is the N-way sibling of `diff_two.py` and, at
-N = 2, produces a recognisably identical picture.
-
+exclusively it belongs there.
 ```
 python type_analysis.py
 ```
