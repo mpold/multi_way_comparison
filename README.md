@@ -1,7 +1,7 @@
 # Knowledge-graph comparison tools
 
-Small, standard-library-only scripts that read the pipeline's `*_G.html`
-knowledge graphs and either **repair** them or **compare** them. Each graph is a
+Small, standard-library-only scripts that uses input `*.html` knowledge/relationship 
+graphs and either **repair** them or **compare** them. Each graph is a
 self-contained vis-network page with its data embedded as a `const DATA={...}`
 block; these scripts read that block, transform it, and write a new page.
 
