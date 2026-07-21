@@ -1073,9 +1073,9 @@ div.vis-tooltip mark{background:var(--tip-mark);color:#1a1a1a;border-radius:2px;
         </div>
         <datalist id="genelist"></datalist>
         <p class="hint" id="ghint">Exact name, else prefix match.</p>
-        <p class="hint" style="font-weight:700"><strong>Significant nodes or node-pairs may stand alone when they don’t connect to other significant nodes. Hop count can also add or remove edges between isolated significant nodes.</strong></p>
+        <p class="hint" id="isohint" style="font-weight:700" hidden><strong>Significant nodes or node-pairs may stand alone when they don’t connect to other significant nodes. Hop count can also add or remove edges between isolated significant nodes.</strong></p>
         <div class="controls" style="margin-top:8px">
-          <button id="isobtn" class="tool" aria-pressed="false">Remove isolated nodes</button>
+          <button id="isobtn" class="tool" aria-pressed="false" hidden>Remove isolated nodes</button>
         </div>
       </div>
       <div style="margin-top:12px">
@@ -1667,6 +1667,11 @@ function build(){
   // empty graph with no explanation reads as a bug.
   const shn=document.getElementById('sighint'), spb=document.getElementById('spreadbtn');
   spb.hidden=!SIG;
+  // "Remove isolated nodes" only means anything once "significant only" is on —
+  // that filter is what leaves significant genes standing alone — so it and the
+  // hint that explains it appear and disappear with it, like "Spread out" does.
+  document.getElementById('isobtn').hidden=!SIG;
+  document.getElementById('isohint').hidden=!SIG;
   if(SIG)shn.textContent=keep.size?
     ('Showing '+keep.size+' significant gene'+(keep.size===1?'':'s')+' (q ≤ '+sigQ+
      '); relationships need both ends significant, and genes with none stand alone.'+
@@ -2536,6 +2541,8 @@ function resetAll(){
   document.getElementById('spreadbtn').setAttribute('aria-pressed','false');
   document.getElementById('spreadbtn').hidden=true;
   document.getElementById('isobtn').setAttribute('aria-pressed','false');
+  document.getElementById('isobtn').hidden=true;
+  document.getElementById('isohint').hidden=true;
   // the graph is the default view, so any overlay opened over it closes
   if(PANEL)showPanel(PANEL);
   SORT={k:'tau',dir:-1};
